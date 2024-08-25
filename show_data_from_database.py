@@ -43,6 +43,22 @@ app = Flask(__name__)
 
 ### Displays the data on Black maternal mortality extracted from the SQL database
 
+### 'Homepage': Shows the possible routes
+@app.route("/")
+def welcome():
+    return (
+        f"Available Routes:<br/>"
+        f"/api/v1.0/datesbr/>"
+        f"/api/v1.0/black<br/>"
+        f"/api/v1.0/hispanic<br/>"
+        f"/api/v1.0/native-indian<br/>"
+        f"/api/v1.0/asian<br/>"
+        f"/api/v1.0/pacific-islander<br/>"
+        f"/api/v1.0/white<br/>"
+        f"/api/v1.0/aggregate<br/>"
+    )
+
+
 @app.route("/api/v1.0/dates")
 def dates():
     date_data = session.query(Dates.date_m).all()
@@ -169,6 +185,26 @@ def whiteData():
         result_dict["Maternal Mortality Rate"] = result[3]
         white_dict.append(result_dict)
     return jsonify(white_dict)
+
+@app.route("/api/v1.0/aggregate")
+def aggregate():
+    black_avg = session.query(func.avg(Black.maternal_mortality_rate)).first()
+    hispanic_avg = session.query(func.avg(Hispanic.maternal_mortality_rate)).first()
+    native_american_avg = session.query(func.avg(Native_Indian.maternal_mortality_rate)).first()
+    asian_avg = session.query(func.avg(Asian.maternal_mortality_rate)).first()
+    pacific_avg = session.query(func.avg(Pacific_Islander.maternal_mortality_rate)).first()
+    white_avg = session.query(func.avg(White.maternal_mortality_rate)).first()
+                    
+    session.close()
+
+    aggregate_dict = {}
+    aggregate_dict["Average Black Maternal Mortality Rate"] = black_avg[0]
+    aggregate_dict["Average Hispanic Maternal Mortality Rate"] = hispanic_avg[0]
+    aggregate_dict["Average Native American Maternal Mortality Rate"] = native_american_avg[0]
+    aggregate_dict["Average Asian Maternal Mortality Rate"] = asian_avg[0]
+    aggregate_dict["Average Pacific Islander Maternal Mortality Rate"] = pacific_avg[0]
+    aggregate_dict["Average White Maternal Mortality Rate"] = white_avg[0]
+    return jsonify(aggregate_dict)
 
 
 
