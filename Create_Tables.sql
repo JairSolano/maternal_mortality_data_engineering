@@ -11,22 +11,21 @@ DROP TABLE if EXISTS Dates;
 -- Dates table
 CREATE TABLE Dates
 (
-	index INTEGER PRIMARY_KEY,
+	Date_index INTEGER PRIMARY KEY,
 	Date_m DATE
 );
-
-
-
 
 
 -- Create Asian table
 CREATE TABLE Asian
 (
 	
-	Date_m DATE PRIMARY KEY,
+	Asian_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
 	Maternal_Deaths INTEGER, 
 	Live_Births INTEGER,
-	Maternal_Mortality_Rate NUMERIC
+	Maternal_Mortality_Rate NUMERIC,
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
 );
 
 
@@ -34,11 +33,12 @@ CREATE TABLE Asian
 -- Create Black table
 CREATE TABLE Black
 (
-	Date_m DATE,
+	Black_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
 	Maternal_Deaths INTEGER, 
 	Live_Births INTEGER, 
-	Maternal_Mortality_Rate NUMERIC
-	PRIMARY KEY(Date_m) REFERENCES Hispanic(Date_m)
+	Maternal_Mortality_Rate NUMERIC,
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
 );
 
 
@@ -46,24 +46,53 @@ CREATE TABLE Black
 -- Create Hispanic table
 CREATE TABLE Hispanic
 (
-	Date_m DATE PRIMARY KEY,
+	Hispanic_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
 	Maternal_Deaths INTEGER, 
 	Live_Births INTEGER, 
-	Maternal_Mortality_Rate NUMERIC
-);N
+	Maternal_Mortality_Rate NUMERIC,
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
+);
+
+
+
 
 
 
 -- Create Native Indian table
 CREATE TABLE Native_Indian
 (
-	Date_m DATE PRIMARY KEY,
+	Native_Indian_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
 	Maternal_Deaths INTEGER,
 	Live_Births INTEGER, 
 	Maternal_Mortality_Rate NUMERIC,
-	PRIMARY KEY(Date_m) REFERENCES Black
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
 );
 
 
+-- Create Pacific Islander table
+CREATE TABLE Pacific_Islander
+(
+	Pacific_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
+	Maternal_Deaths INTEGER,
+	Live_Births INTEGER, 
+	Maternal_Mortality_Rate NUMERIC,
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
+	
+);
 
+
+--Create White table
+CREATE TABLE White
+(
+	White_index INTEGER PRIMARY KEY,
+	Date_index INTEGER,
+	Maternal_Deaths INTEGER,
+	Live_Births INTEGER, 
+	Maternal_Mortality_Rate NUMERIC,
+	FOREIGN KEY(Date_index) REFERENCES Dates(Date_index)
+	
+);
 
