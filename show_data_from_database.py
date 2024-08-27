@@ -49,7 +49,7 @@ app = Flask(__name__)
 def welcome():
     return (
         f"Available Routes:<br/>"
-        f"/api/v1.0/datesbr/>"
+        f"/api/v1.0/dates<br/>"
         f"/api/v1.0/black<br/>"
         f"/api/v1.0/hispanic<br/>"
         f"/api/v1.0/native-indian<br/>"
